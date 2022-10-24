@@ -7,17 +7,14 @@ import Metric from './Metric';
 @Entity()
 export default class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string | undefined;
 
   @Column('text')
-  name: string;
+    name: string | undefined;
 
   @Column('date')
-  birth_date: Date;
-
-  @Column('uuid', { unique: true })
-  metricId: string;
+    birth_date: Date | undefined;
 
   @OneToMany(() => Metric, (metric) => metric.user)
-   metric: Metric[];
+    metric: Metric[] | undefined;
 }

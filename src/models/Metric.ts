@@ -7,17 +7,17 @@ import User from './User';
 @Entity()
 export default class Metric {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string | undefined;
 
-  @Column()
-  bpm: number;
+  @Column('int')
+    bpm: number | undefined;
 
   @Column('date')
-  metric_date: Date;
+    metric_date: Date | undefined;
 
-  @Column()
-  metric_hour:number;
+  @Column('int')
+    metric_hour:number | undefined;
 
   @ManyToOne(() => User, (user) => user.metric)
-  user: User;
+    user: User | undefined;
 }
