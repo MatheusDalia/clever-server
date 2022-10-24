@@ -1,7 +1,6 @@
 import 'dotenv/config';
-import {
-  Connection, getConnection, ConnectionOptions, createConnection,
-} from 'typeorm';
+import { Connection, ConnectionOptions, createConnection } from 'typeorm';
+import getConnection from '@jest/globals';
 
 class DatabaseConnection {
   private connection: Connection | null = null;
@@ -20,21 +19,27 @@ class DatabaseConnection {
 
       return this.connection;
     } catch (error) {
-      throw new Error('Error: could not connect to test database! Make sure you are running the back-end with the "docker-compose up" command.');
+      throw new Error(
+        'Error: could not connect to database. Make sure you are running docker-compose',
+      );
     }
   }
 
   async close() {
-    await this.connection.close();
+    await this.connection?.close();
   }
 
   async clear() {
-    const entities = this.connection.entityMetadatas;
+    const entities = this.connection?.entityMetadatas;
+
+    if (!entities) {
+      return;
+    }
 
     await Promise.all(
       entities.map(async (entity) => {
-        const repository = this.connection.getRepository(entity.name);
-        await repository.query(`DELETE FROM "${entity.tableName}"`);
+        const repository = this.connection?.getRepository(entity.name);
+        await repository?.query(`DELETE FROM "${entity.tableName}"`);
       }),
     );
   }

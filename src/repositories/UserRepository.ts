@@ -1,5 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../models';
+import { UserType } from '../DTOs';
 
 @EntityRepository(User)
 export default class UserRepository extends Repository<User> {
@@ -17,17 +18,17 @@ export default class UserRepository extends Repository<User> {
     }
   }
 
-  public async findByEmail(email: string): Promise<User | false | string> {
+  public async patch(
+    id: string,
+    userData: any,
+  ): Promise<User | string> {
     try {
-      const user = await this.findOne({ where: { email } });
+      await this.update(id, userData);
+      const UpdatedUser = await this.findOne(id);
 
-      if (!user) {
-        return false;
-      }
-
-      return user;
+      return UpdatedUser;
     } catch (error) {
-      return error.severity || error;
+      return error;
     }
   }
 }

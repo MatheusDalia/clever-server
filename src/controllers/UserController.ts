@@ -3,42 +3,31 @@ import {
 } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { UserRepository } from '../repositories';
-import { User } from '../DTOs';
+import { UserType } from '../DTOs';
 
 class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const {
         name,
-        phone,
-        email,
-        password,
+        birth_date,
+        metricId,
       } = req.body;
 
       const userRepository = getCustomRepository(UserRepository);
 
       const userData = {
         name,
-        phone,
-        email,
-        password,
+        birth_date,
+        metricId,
       };
 
-      const { error } = User.validate(userData);
+      const { error } = UserType.validate(userData);
 
       if (error) {
         return next({
           status: 400,
           message: error.details,
-        });
-      }
-
-      const checkEmail = await userRepository.findByEmail(email);
-
-      if (checkEmail) {
-        return next({
-          status: 400,
-          message: 'This email is already registred',
         });
       }
 
@@ -85,6 +74,59 @@ class UserController {
       return next();
     } catch (error) {
       return next(error);
+    }
+  }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.params;
+      const userData = req.body;
+
+      const { error } = UserType.validate(userData);
+
+      if (error) {
+        return next({
+          status: 400,
+          message: error.details,
+        });
+      }
+
+      const userRepository = getCustomRepository(UserRepository);
+      const updatedUser = await userRepository.patch(userId, userData);
+
+      res.locals = {
+        status: 200,
+        message: 'User updated',
+        data: updatedUser,
+      };
+
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.params;
+
+      const userRepository = getCustomRepository(UserRepository);
+      await userRepository.delete(userId);
+
+      const user = userRepository.findById(userId);
+
+      res.locals = {
+        status: 200,
+        message: 'User deleted',
+        data: user,
+      };
+
+      return next();
+    } catch (error) {
+      return next({
+        status: 400,
+        message: error.details,
+      });
     }
   }
 }

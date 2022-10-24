@@ -1,4 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity, PrimaryGeneratedColumn, Column, OneToMany,
+} from 'typeorm';
+
+import Metric from './Metric';
 
 @Entity()
 export default class User {
@@ -8,12 +12,12 @@ export default class User {
   @Column('text')
   name: string;
 
-  @Column('text', { nullable: true })
-  phone: string;
+  @Column('date')
+  birth_date: Date;
 
-  @Column('text', { unique: true })
-  email: string;
+  @Column('uuid', { unique: true })
+  metricId: string;
 
-  @Column('text', { select: false })
-  password: string;
+  @OneToMany(() => Metric, (metric) => metric.user)
+   metric: Metric[];
 }

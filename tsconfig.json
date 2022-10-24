@@ -1,45 +1,35 @@
 {
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "target": "es2017",
-    "module": "commonjs",
-    "lib": [
-      "es6"
-    ],
-    "allowJs": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "removeComments": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
-    ],
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@controllers/*": [
-        "./src/controllers/*"
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "allowJs": true,
+      "noEmit": true,
+      "moduleResolution": "node",
+      "strict": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "resolveJsonModule": true,
+      "skipLibCheck": true,
+      "typeRoots": [
+        "./node_modules/@types",
+        "./src/@types"
       ],
-      "@models/*": [
-        "./src/models/*"
-      ],
-      "@DTOs/*": [
-        "./src/DTOs/*"
-      ],
-      "@repositories/*": [
-        "./src/repositories/*"
-      ],
-    }
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "tests"
-  ]
+      "baseUrl": ".",
+      "paths": {
+        "@controllers/*": [
+          "./src/controllers/*"
+        ],
+        "@models/*": [
+          "./src/models/*"
+        ],
+        "@DTOs/*": [
+          "./src/DTOs/*"
+        ],
+        "@repositories/*": [
+          "./src/repositories/*"
+        ],
+      }
+    },
+    "include": [
+      "./src/**/*"
+    ]
 }

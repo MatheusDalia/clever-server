@@ -1,4 +1,4 @@
-FROM node:14.18
+FROM node:latest
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
@@ -14,9 +14,12 @@ COPY --chown=node:node . .
 
 USER node
 
-EXPOSE 3001
+EXPOSE 8080
 
-CMD [ "yarn", "dev" ]
+# FROM base as production
 
-# para a documentação seguida para construção desse arquivo, vá para o step 3 do link:
-# https://www.digitalocean.com/community/tutorials/como-construir-uma-aplicacao-node-js-com-o-docker-pt
+ENV NODE_PATH=./build
+
+RUN yarn build
+
+CMD ["yarn", "dev"]
