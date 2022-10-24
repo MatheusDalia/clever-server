@@ -10,7 +10,7 @@ export default {
   },
   servers: [
     {
-      url: 'http://localhost:3001',
+      url: 'http://localhost:8080',
       description: 'Local Server',
     },
   ],

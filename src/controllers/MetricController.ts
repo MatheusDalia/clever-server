@@ -11,16 +11,20 @@ class MetricController {
       const { user } = res.locals;
       const {
         bpm,
+        pa,
         metric_date,
         metric_hour,
+        userId,
       } = req.body;
 
       const metricRepository = getCustomRepository(MetricRepository);
 
       const metricData = {
         bpm,
+        pa,
         metric_date,
         metric_hour,
+        userId,
       };
 
       const { error } = MetricType.validate(metricData);

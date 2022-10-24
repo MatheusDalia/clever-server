@@ -12,6 +12,9 @@ export default class Metric {
   @Column('int')
     bpm: number | undefined;
 
+  @Column('int')
+    pa: number | undefined;
+
   @Column('date')
     metric_date: Date | undefined;
 

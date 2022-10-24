@@ -11,7 +11,6 @@ class UserController {
       const {
         name,
         birth_date,
-        metricId,
       } = req.body;
 
       const userRepository = getCustomRepository(UserRepository);
@@ -19,7 +18,6 @@ class UserController {
       const userData = {
         name,
         birth_date,
-        metricId,
       };
 
       const { error } = UserType.validate(userData);
